@@ -3,9 +3,12 @@ package com.example.androidpracticumcustomview
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import com.example.androidpracticumcustomview.ui.theme.CustomContainer
+import com.example.androidpracticumcustomview.ui.theme.MainScreen
 
 /*
 Задание:
@@ -18,9 +21,10 @@ class MainActivity : ComponentActivity() {
         /*
         Раскомментируйте нужный вариант
          */
-        startXmlPracticum() // «традиционный» android (XML)
-//          setContent { // Jetpack Compose
-//             MainScreen()
+//        startXmlPracticum() // «традиционный» android (XML)
+          setContent { // JetPack Compose
+              MainScreen()
+          }
     }
 
     private fun startXmlPracticum() {
@@ -28,14 +32,22 @@ class MainActivity : ComponentActivity() {
         setContentView(customContainer)
 
         val firstView = TextView(this).apply {
-            // TODO
-            // ...
+            text = "First view"
+            layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            )
         }
 
         val secondView = TextView(this).apply {
-            // TODO
-            // ...
+            text = "Second view"
+            layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            )
         }
+
+        customContainer.addView(firstView)
 
         // Добавление второго элемента через некоторое время
         Handler(Looper.getMainLooper()).postDelayed({

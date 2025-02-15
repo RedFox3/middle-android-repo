@@ -1,5 +1,6 @@
 package com.example.androidpracticumcustomview.ui.theme
 
+import android.animation.ObjectAnimator.ofFloat
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
@@ -23,18 +24,57 @@ class CustomContainer @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        // TODO
-        // ...
+        for (i in 0 until childCount) {
+            val child = getChildAt(i)
+            measureChild(child, widthMeasureSpec, heightMeasureSpec)
+        }
+
+        setMeasuredDimension(
+            MeasureSpec.getSize(widthMeasureSpec),
+            MeasureSpec.getSize(heightMeasureSpec)
+        )
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        // TODO
-        // ...
+        if (childCount > 0 && changed) {
+            val child = getChildAt(0)
+            val childLeft = (right - left - child.measuredWidth) / 2
+            val childTop = (bottom / 4) // Верхняя часть экрана
+            child.layout(childLeft, childTop, childLeft + child.measuredWidth, childTop + child.measuredHeight)
+            startAnimation(true, child)
+        }
+        if (childCount > 1) {
+            val child = getChildAt(1)
+            val childLeft = (right - left - child.measuredWidth) / 2
+            val childTop = (bottom / 4) * 3 // Нижняя часть экрана
+            child.layout(childLeft, childTop, childLeft + child.measuredWidth, childTop + child.measuredHeight)
+            startAnimation(false, child)
+        }
+    }
+
+    private fun startAnimation(isFirst: Boolean, view: View) {
+        val animTranslation = if (isFirst) {
+            ofFloat(
+                view, "translationY", height / 4f - view.height, 0f
+            )
+        } else {
+            ofFloat(
+                view, "translationY", view.height - height / 4f, 0f
+            )
+        }
+        animTranslation.duration = 5000
+
+        val animAlpha = ofFloat(view, "alpha", 0f, 1f)
+        animAlpha.duration = 2000
+
+        animTranslation.start()
+        animAlpha.start()
     }
 
     override fun addView(child: View) {
-        // TODO
-        // ...
+        if (childCount > 2) {
+            throw IllegalStateException("Дочерних элементов не может быть больше двух")
+        }
+        super.addView(child)
     }
 }
