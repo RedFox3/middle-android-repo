@@ -21,6 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.XmlActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ComposeActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -4,17 +4,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
-/*
-Задание:
-Реализуйте необходимые компоненты.
-*/
-
 @Composable
-fun MainScreen() {
+fun ComposeScreen() {
     Scaffold { paddingValues ->
         Box(
             modifier = Modifier
@@ -24,12 +20,10 @@ fun MainScreen() {
 
             CustomContainerCompose(
                 firstChild = {
-                    // TODO
-                    // ...
+                    Text("First view")
                 },
                 secondChild = {
-                    // TODO
-                    // ...
+                    Text("Second view")
                 }
             )
         }
