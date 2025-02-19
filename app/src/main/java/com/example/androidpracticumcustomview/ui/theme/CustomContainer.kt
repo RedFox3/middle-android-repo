@@ -1,5 +1,6 @@
 package com.example.androidpracticumcustomview.ui.theme
 
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator.ofFloat
 import android.content.Context
 import android.util.AttributeSet
@@ -39,14 +40,14 @@ class CustomContainer @JvmOverloads constructor(
         if (childCount > 0 && changed) {
             val child = getChildAt(0)
             val childLeft = (right - left - child.measuredWidth) / 2
-            val childTop = (bottom / 4) // Верхняя часть экрана
+            val childTop = (bottom / 4) // 1/4 высоты ViewGroup
             child.layout(childLeft, childTop, childLeft + child.measuredWidth, childTop + child.measuredHeight)
             startAnimation(true, child)
         }
         if (childCount > 1) {
             val child = getChildAt(1)
             val childLeft = (right - left - child.measuredWidth) / 2
-            val childTop = (bottom / 4) * 3 // Нижняя часть экрана
+            val childTop = (bottom / 4) * 3 // 3/4 высоты ViewGroup
             child.layout(childLeft, childTop, childLeft + child.measuredWidth, childTop + child.measuredHeight)
             startAnimation(false, child)
         }
@@ -67,9 +68,11 @@ class CustomContainer @JvmOverloads constructor(
         val animAlpha = ofFloat(view, "alpha", 0f, 1f)
         animAlpha.duration = 2000
 
-        animTranslation.start()
-        animAlpha.start()
-    }
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(animTranslation, animAlpha)
+        animatorSet.start()
+   }
+
 
     override fun addView(child: View) {
         if (childCount > 2) {

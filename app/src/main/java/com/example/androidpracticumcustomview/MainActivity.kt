@@ -1,14 +1,20 @@
 package com.example.androidpracticumcustomview
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.widget.FrameLayout
-import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.androidpracticumcustomview.ui.theme.CustomContainer
-import com.example.androidpracticumcustomview.ui.theme.MainScreen
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import com.example.androidpracticumcustomview.ui.ComposeActivity
+import com.example.androidpracticumcustomview.ui.XmlActivity
 
 /*
 Задание:
@@ -18,40 +24,32 @@ import com.example.androidpracticumcustomview.ui.theme.MainScreen
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /*
-        Раскомментируйте нужный вариант
-         */
-//        startXmlPracticum() // «традиционный» android (XML)
-          setContent { // JetPack Compose
-              MainScreen()
-          }
+        setContent {
+            MainScreen()
+        }
     }
 
-    private fun startXmlPracticum() {
-        val customContainer = CustomContainer(this)
-        setContentView(customContainer)
-
-        val firstView = TextView(this).apply {
-            text = "First view"
-            layoutParams = FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT
-            )
+    @Composable
+    fun MainScreen() {
+        Scaffold { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Button(onClick = {
+                    startActivity(android.content.Intent(this@MainActivity, XmlActivity::class.java))
+                }) {
+                    Text("XmlActivity")
+                }
+                Button(onClick = {
+                    startActivity(android.content.Intent(this@MainActivity, ComposeActivity::class.java))
+                }) {
+                    Text("ComposeActivity")
+                }
+            }
         }
-
-        val secondView = TextView(this).apply {
-            text = "Second view"
-            layoutParams = FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT
-            )
-        }
-
-        customContainer.addView(firstView)
-
-        // Добавление второго элемента через некоторое время
-        Handler(Looper.getMainLooper()).postDelayed({
-            customContainer.addView(secondView)
-        }, 2000)
     }
 }

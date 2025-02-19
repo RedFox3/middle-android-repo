@@ -9,13 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
-/*
-Задание:
-Реализуйте необходимые компоненты.
-*/
-
 @Composable
-fun MainScreen() {
+fun ComposeScreen() {
     Scaffold { paddingValues ->
         Box(
             modifier = Modifier
