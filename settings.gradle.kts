@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "android practicum custom view"
+rootProject.name = "PraktikumChatApp"
 include(":app")
