@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">android practicum custom view</string>
+    <string name="app_name">PraktikumChatApp</string>
+    <string name="send">Отправить</string>
+    <string name="unsupported_message">(сообщение не поддерживается)</string>
 </resources>
